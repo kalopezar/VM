@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>CCNY Student Elections - Voter Registration</title>
+</head>
+<body>
+<nav class="container-fluid">
+    <ul>
+        <li><strong>CCNY Student Elections - Registration</strong></li>
+    </ul>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#" role="button">Login</a></li>
+    </ul>
+</nav>
+<main class="container">
+    <section>
+        <h2>Voter Registration</h2>
+        <form id="registrationForm" action="your_backend_endpoint_for_registration" method="POST">
+            <label for="Name"> Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="dob"> Date of Birth:</label>
+            <input type="dob" id="dob" name="dob" required>
+
+            <!-- Add more fields as necessary -->
+            
+            <button type="submit">Register</button>
+        </form>
+    </section>
+
+    <div id="responseMessage"></div>
+
+</main>
+<footer class="container">
+    <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
+</footer>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Collect form data
+        const formData = {
+            name: document.getElementById('fullName').value,
+            dob: document.getElementById('dob').value
+        };
+
+        // Send a POST request to the server
+        const response = await fetch('http://localhost:8080/register_voter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        // Handle the response
+        const responseData = await response.text();
+        document.getElementById('responseMessage').innerText = responseData;
+    });
+</script>
+
+</body>
+</html>
